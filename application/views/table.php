@@ -93,6 +93,7 @@
           </div>
       </div>
       <div class="modal-footer">
+          <input id="multipart" type="checkbox" name="MultiPart" value="MultiPart"> MultiPart
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="add_part">Add</button>
       </div>
@@ -215,15 +216,33 @@
     
     function UpdateTable()
     {
-         var tabledata = $('#voorbeeld_table').dynatable();
+         //var tabledata = $('#voorbeeld_table').dynatable();
          $.getJSON("<?php echo  base_url('data/get_components')?>", function(result) {
              console.log("Update from json");
              console.log(result);
              var tabl = $('#voorbeeld_table').dynatable({
-                 dataset: {records: result}
+                 dataset: {records: result},
+                 readers: {
+                    'id': function(el, record) {
+                      return Number(el.innerHTML) || 0;
+                    },
+                   'quantity': function(el, record) {
+                     return Number(el.innerHTML) || 0;
+                   }
+                 }
              }).data('dynatable');
              tabl.settings.dataset.originalRecords = result;
              tabl.process();
+             var dynatable = $('#voorbeeld_table').dynatable({
+                readers: {
+                   'id': function(el, record) {
+                     return Number(el.innerHTML) || 0;
+                   },
+                   'quantity': function(el, record) {
+                     return Number(el.innerHTML) || 0;
+                   }
+                }
+            }).data('dynatable');     //Init Dynatable
         });
     }
     
@@ -267,7 +286,7 @@
     
     function EditComponent(id)
     {
-        console.log("Add part launch modal");
+        //console.log("Add part launch modal");
         //Clear out all options
         $("#change_cat_select option").remove();
         $("#change_footp_select option").remove();
@@ -351,7 +370,16 @@
             options.append($("<option />").val(item.Cat_name).text(item.Cat_name));
         });
     });
-     var dynatable = $('#voorbeeld_table').dynatable().data('dynatable');     //Init Dynatable
+     var dynatable = $('#voorbeeld_table').dynatable({
+         readers: {
+            'id': function(el, record) {
+              return Number(el.innerHTML) || 0;
+            },
+            'quantity': function(el, record) {
+              return Number(el.innerHTML) || 0;
+            }
+         }
+     }).data('dynatable');     //Init Dynatable
      AddEditToTable();                                      //Add edit buttons to table
      $("#addcomperror").hide();                             //Hide error in modal
      $("#changecomperror").hide();  
@@ -426,6 +454,10 @@ $('#voorbeeld_table').on('dynatable:afterUpdate', function (e) {
 
 $('#add_part_modal').on('click', function (e) {
     console.log("Add part launch modal");
+    $("#cat_select option").remove();
+    $("#footp_select option").remove();
+    $("#manuf_select option").remove();
+    $("#dist_select option").remove();
      $.getJSON("<?php echo  base_url('data/get_categories')?>", function(result) {
         var options = $("#cat_select");
         //console.log(result);
@@ -560,8 +592,18 @@ $('#add_part').on('click', function (e) {
             console.log(jsondata);
             $.post( "<?php echo  base_url('data/add_component')?>", jsondata, function( data ) {
                 //$( ".result" ).html( data );
+                
                 UpdateTable();
                 GenerateSuccess("Part added");
+                console.log($("#multipart").is(':checked'));
+                if($("#multipart").is(':checked'))
+                {
+                    
+                }
+                else
+                {
+                    $('#Add_component_modal').modal('hide');
+                }
             });
             
         }
