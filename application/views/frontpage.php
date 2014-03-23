@@ -4,9 +4,8 @@
       <div class="jumbotron">
         <h1>MyParts</h1>
         <p>Component management system</p>
-        <p>Coming soon!</p>
         <p>
-          <a class="btn btn-lg btn-primary" href="<?php echo base_url('frontpage/testdb') ?>" role="button">More...</a>
+          <a class="btn btn-lg btn-primary" href="<?php echo base_url('about') ?>" role="button">More...</a>
         </p>
       </div>
 
