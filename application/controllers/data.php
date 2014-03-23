@@ -93,6 +93,22 @@ class Data extends Main_Controller {
             echo json_encode($ar);
 	}
         
+        public function get_component()
+	{
+            $this->load->database();
+            if($this->input->post("idval", TRUE))
+            {
+                $idval =  $this->input->post("idval", TRUE);
+                $query = $this->db->get_where('Components', array('Comp_id' => $idval), 1);
+                $data = $query->result();
+                echo json_encode($data);
+            }
+            else
+            {
+                show_error("Only Post allowed", 403);
+            }
+	}
+
      public function add_component()
 	{	
             if (!$this->ion_auth->is_admin()) //remove this elseif if you want to enable this for non-admins
@@ -116,8 +132,12 @@ class Data extends Main_Controller {
             {
                 //echo var_dump($this->input->post(NULL, TRUE)); // returns all POST items with XSS filter 
                 $data = $this->input->post(NULL, TRUE);
-                echo var_dump($data);
-                //$this->db->insert('Components', $data); 
+                $Comp_id = $data["Comp_id"];
+                $this->db->where('Comp_id', $Comp_id);
+                unset($data['Comp_id']);
+                $this->db->update('Components', $data); 
+                //echo "ID: ".$Comp_id;
+                //echo var_dump($data);
             }
 	}
      public function incr_component()
