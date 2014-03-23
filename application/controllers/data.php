@@ -73,8 +73,15 @@ class Data extends Main_Controller {
             $this->db->order_by("Components.Comp_id", "asc");
             $query = $this->db->get();
             $ar = array();
+            $urlfront = "<a target=\"_blank\" href=\"";
+            $urlrear = "\">Link</a>";
             foreach ($query->result() as $row)
             {
+                $datasheet = "";
+                if(!empty($row->Datasheet))
+                {
+                    $datasheet = $urlfront.$row->Datasheet.$urlrear;
+                }
                 $temp = array(
                     'id' => $row->Comp_id,
                     'category' => $row->Cat_name,
@@ -82,10 +89,8 @@ class Data extends Main_Controller {
                     'description' => $row->Description,
                     'location' => $row->Location,
                     'quantity'=> $row->Quantity,
-                    'datasheet' => $row->Datasheet,
-                    'manufacturer' => $row->Manuf_name,
+                    'datasheet' => $datasheet,
                     'footprint' => $row->Footp_name,
-                    'distributor' => $row->Dist_name,
                     'edit' => ""
                 );
                 array_push($ar, $temp);

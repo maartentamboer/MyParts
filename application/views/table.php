@@ -202,7 +202,7 @@
     function AddEditToTable()
     {
         $('#voorbeeld_table tr').each(function() {
-        var data = $(this).find("td").eq(10);  
+        var data = $(this).find("td").eq(8);  
         var id = $(this).find("td").eq(0).html();  
         //console.log(id);
         data.html("<button id=\"" +id+ "\"type=\"button\" class=\"editbuttonplus btn btn-primary btn-xs\"><span class=\"glyphicon glyphicon-plus\"></span></button>\n\

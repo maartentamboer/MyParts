@@ -48,9 +48,16 @@ class Parts extends Main_Controller {
             $this->db->join('Distributors', 'Components.Distributors_id = Distributors.id');
             $this->db->order_by("Components.Comp_id", "asc");
             $query = $this->db->get();
+            $urlfront = "<a target=\"_blank\" href=\"";
+            $urlrear = "\">Link</a>";
             foreach ($query->result() as $row)
             {
-                $this->table->add_row($row->Comp_id, $row->Cat_name, $row->Nam, $row->Description, $row->Location, $row->Quantity, $row->Datasheet, $row->Manuf_name, $row->Footp_name, $row->Dist_name);
+                $datasheet = "";
+                if(!empty($row->Datasheet))
+                {
+                    $datasheet = $urlfront.$row->Datasheet.$urlrear;
+                }
+                $this->table->add_row($row->Comp_id, $row->Cat_name, $row->Nam, $row->Description, $row->Location, $row->Quantity, $datasheet, $row->Footp_name);
             }
             $tmpl = array (
                                 'table_open'          => '<table id="voorbeeld_table" class="table table-striped">',
@@ -74,7 +81,7 @@ class Parts extends Main_Controller {
                           );
 
             $this->table->set_template($tmpl);
-            $this->table->set_heading('ID', 'Category', 'Name', 'Description', 'Location', 'Quantity', 'Datasheet', 'Manufacturer', 'Footprint', 'Distributor', 'Edit');
+            $this->table->set_heading('ID', 'Category', 'Name', 'Description', 'Location', 'Quantity', 'Datasheet', 'Footprint', 'Edit');
             //$this->tabledata =  $this->table->generate($query);
             $this->topage["tabledata"] = $this->table->generate();
             $this->_render('table', $this->topage);
