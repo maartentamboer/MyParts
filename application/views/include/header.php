@@ -6,7 +6,6 @@
    <meta name="description" content="">
    <meta name="keywords" content="">
    <meta name="author" content="">
-
    <title>MyParts</title>
 
    <link href="<?php echo base_url('assets/css/bootstrap.min.css') ?>" rel="stylesheet">

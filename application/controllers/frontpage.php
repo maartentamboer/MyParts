@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) die();
 class Frontpage extends Main_Controller {
-	
-        protected $topage;
+
+  protected $topage;
 	function __construct()
 	{
 		parent::__construct();
@@ -19,21 +19,21 @@ class Frontpage extends Main_Controller {
 
 		$this->lang->load('auth');
 		$this->load->helper('language');
-                if (!$this->ion_auth->logged_in())
-	  	{
-			//redirect them to the login page
-			redirect('auth/login', 'refresh');
-	  	}
-                        $id = $this->ion_auth->get_user_id();
-            $query = $this->db->get_where('users', array('id' => $id), 1);
-            $ret = $query->row();
-            $this->username = $ret->first_name." ".$ret->last_name;
-            $this->topage["username"] = $this->username;
+    if (!$this->ion_auth->logged_in())
+    {
+      //redirect them to the login page
+      redirect('auth/login', 'refresh');
+    }
+    $id = $this->ion_auth->get_user_id();
+    $query = $this->db->get_where('users', array('id' => $id), 1);
+    $ret = $query->row();
+    $this->username = $ret->first_name." ".$ret->last_name;
+    $this->topage["username"] = $this->username;
 	}
-    
+
     public function index()
-	{	
-            $this->_render('frontpage', $this->topage);
+	{
+      $this->_render('frontpage', $this->topage);
 	}
 }
 
