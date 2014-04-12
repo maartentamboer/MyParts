@@ -38,7 +38,7 @@
   <script src="<?php echo base_url('assets/js/custom.js') ?>"></script>
 
   <!-- All the stuff that makes the page work -->
-  <!-- It's like 'magic' :-D -->
+  <!-- Its like magic :-D -->
   <script>
 
     //This is quite dirty, but it works
