@@ -13,6 +13,15 @@
           <ul class="nav navbar-nav">
             <li class="<?php echo isActive($pageName,"frontpage")?>"><a href="<?php echo  base_url()?>">Home</a></li>
             <li class="<?php echo isActive($pageName,"parts")?>"><a href="<?php echo  base_url('parts')?>">Parts</a></li>
+            <li class="dropdown <?php echo isActive($pageName,"management")?>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Management <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?php echo  base_url('management/categories')?>">Categories</a></li>
+                  <li><a href="#">Footprints</a></li>
+                  <li><a href="#">Manufacturers</a></li>
+                  <li><a href="#">Distributors</a></li>
+                </ul>
+            </li>
             <li class="<?php echo isActive($pageName,"about")?>"><a href="<?php echo  base_url('about')?>">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
